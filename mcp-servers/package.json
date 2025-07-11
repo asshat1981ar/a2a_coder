@@ -1,0 +1,16 @@
+{
+  "name": "mcp-servers",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MCP Servers for Claude Desktop",
+  "scripts": {
+    "start": "node mcpdeploy.js",
+    "detect": "node mcpdeploy.js detect .",
+    "build": "node mcpdeploy.js build .",
+    "create": "node mcpdeploy.js create",
+    "install": "node mcpdeploy.js install"
+  },
+  "dependencies": {
+    "commander": "^10.0.1"
+  }
+}

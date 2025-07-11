@@ -1,0 +1,16 @@
+{
+  "// Environment Variables Template": "Copy to .env file and fill in actual values",
+  "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here",
+  "DEEPSEEK_API_KEY": "your_deepseek_api_key_here",
+  "NOTION_API_TOKEN": "your_notion_token_here",
+  "SLACK_BOT_TOKEN": "xoxb-your-slack-bot-token",
+  "SLACK_APP_TOKEN": "xapp-your-slack-app-token",
+  "JENKINS_URL": "http://localhost:8080",
+  "JENKINS_USERNAME": "admin",
+  "JENKINS_PASSWORD": "your_jenkins_password",
+  "PLANKA_BASE_URL": "http://localhost:3000",
+  "PLANKA_ADMIN_ID": "your_planka_admin_id",
+  "PLANKA_AGENT_EMAIL": "your_email@example.com",
+  "PLANKA_AGENT_PASSWORD": "your_planka_password",
+  "POSTGRES_CONNECTION_STRING": "postgresql://localhost:5432/postgres"
+}
