@@ -6,6 +6,7 @@
 const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
 const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
 const { CallToolRequestSchema, ListToolsRequestSchema } = require("@modelcontextprotocol/sdk/types.js");
+const { MCPInteractionFramework } = require('./mcp-interaction-framework.js');
 
 class MCPBundleOrchestrator {
   constructor() {

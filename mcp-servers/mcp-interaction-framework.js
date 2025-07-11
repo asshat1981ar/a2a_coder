@@ -19,6 +19,7 @@ const { CallToolRequestSchema, ListToolsRequestSchema } = require("@modelcontext
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { ExternalIntegrationManager } = require('./mcp-external-integrations.js');
 
 class MCPInteractionFramework {
   constructor() {
@@ -41,6 +42,7 @@ class MCPInteractionFramework {
     this.coordinationEngine = new CoordinationEngine();
     this.performanceOptimizer = new PerformanceOptimizer();
     this.configManager = new ConfigurationManager();
+    this.externalIntegrationManager = new ExternalIntegrationManager();
     
     // Runtime state
     this.activeSessions = new Map();
@@ -172,6 +174,32 @@ class MCPInteractionFramework {
             },
             required: ["operation", "configScope"]
           }
+        },
+        {
+          name: "register_external_ai_application",
+          description: "Register an external AI application (e.g., ChatGPT, Copilot, Claude Desktop) with the framework.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              name: { type: "string", description: "Unique name for the external AI application." },
+              type: { type: "string", description: "Type of the external AI application (e.g., 'openai', 'github_copilot', 'claude_desktop')." },
+              config: { type: "object", description: "Configuration object for the external AI application (e.g., apiKey, model, endpoint)." }
+            },
+            required: ["name", "type", "config"]
+          }
+        },
+        {
+          name: "call_external_ai_tool",
+          description: "Call a specific tool or function on a registered external AI application.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              integrationName: { type: "string", description: "Name of the registered external AI application." },
+              toolName: { type: "string", description: "Name of the tool or function to call on the external AI application." },
+              args: { type: "object", description: "Arguments for the tool or function." }
+            },
+            required: ["integrationName", "toolName", "args"]
+          }
         }
       ]
     }));
@@ -198,6 +226,10 @@ class MCPInteractionFramework {
             return await this.emergencyFrameworkManagement(request.params.arguments);
           case "configuration_management":
             return await this.configurationManagement(request.params.arguments);
+          case "register_external_ai_application":
+            return await this.registerExternalAIApplication(request.params.arguments);
+          case "call_external_ai_tool":
+            return await this.callExternalAITool(request.params.arguments);
           default:
             throw new Error(`Unknown framework tool: ${request.params.name}`);
         }
@@ -678,6 +710,26 @@ class MCPInteractionFramework {
     
     return {
       content: [{ type: "text", text: configMgmt }]
+    };
+  }
+
+  async registerExternalAIApplication(args) {
+    const { name, type, config } = args;
+    const success = this.externalIntegrationManager.registerIntegration(name, type, config);
+    if (success) {
+      return {
+        content: [{ type: "text", text: `External AI application '${name}' (${type}) registered successfully.` }]
+      };
+    } else {
+      throw new Error(`Failed to register external AI application '${name}' (${type}).`);
+    }
+  }
+
+  async callExternalAITool(args) {
+    const { integrationName, toolName, args: toolArgs } = args;
+    const result = await this.externalIntegrationManager.callExternalTool(integrationName, toolName, toolArgs);
+    return {
+      content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
     };
   }
 
