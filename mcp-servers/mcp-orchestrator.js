@@ -3,10 +3,10 @@
 // MCP Bundle Orchestrator - Main entry point for the MCP Server Bundle extension
 // This server coordinates multiple MCP servers and provides a unified interface
 
-const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
-const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
-const { CallToolRequestSchema, ListToolsRequestSchema } = require("@modelcontextprotocol/sdk/types.js");
-const { MCPInteractionFramework } = require('./mcp-interaction-framework.js');
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+import MCPInteractionFramework from './mcp-interaction-framework.js';
 
 class MCPBundleOrchestrator {
   constructor() {
@@ -23,6 +23,7 @@ class MCPBundleOrchestrator {
       }
     );
 
+    this.mcpInteractionFramework = new MCPInteractionFramework();
     this.availableServers = [
       { name: "memory", status: "available", description: "Knowledge graph and entity tracking" },
       { name: "eslint", status: "available", description: "JavaScript/TypeScript linting" },
@@ -84,6 +85,19 @@ class MCPBundleOrchestrator {
             type: "object",
             properties: {}
           }
+        },
+        {
+          name: "register_external_ai_app_via_orchestrator",
+          description: "Register an external AI application (e.g., ChatGPT, Copilot, Claude Desktop) with the framework via the orchestrator.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              name: { type: "string", description: "Unique name for the external AI application." },
+              type: { type: "string", description: "Type of the external AI application (e.g., 'openai', 'github_copilot', 'claude_desktop')." },
+              config: { type: "object", description: "Configuration object for the external AI application (e.g., apiKey, model, endpoint)." }
+            },
+            required: ["name", "type", "config"]
+          }
         }
       ]
     }));
@@ -101,6 +115,10 @@ class MCPBundleOrchestrator {
             return this.handleGetSetupInstructions(args);
           case "bundle_info":
             return this.handleBundleInfo();
+          case "register_external_ai_app_via_orchestrator":
+            return this.handleRegisterExternalAIAppViaOrchestrator(args);
+          case "call_external_ai_tool_via_orchestrator":
+            return this.handleCallExternalAIToolViaOrchestrator(args);
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -277,6 +295,16 @@ class MCPBundleOrchestrator {
     };
   }
 
+  async handleRegisterExternalAIAppViaOrchestrator(args) {
+    const response = await this.mcpInteractionFramework.registerExternalAIApplication(args);
+    return response;
+  }
+
+  async handleCallExternalAIToolViaOrchestrator(args) {
+    const response = await this.mcpInteractionFramework.callExternalAITool(args);
+    return response;
+  }
+
   async run() {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
@@ -284,9 +312,9 @@ class MCPBundleOrchestrator {
   }
 }
 
-if (require.main === module) {
-  const orchestrator = new MCPBundleOrchestrator();
-  orchestrator.run().catch(console.error);
-}
+export default MCPBundleOrchestrator;
 
-module.exports = MCPBundleOrchestrator;
+(async () => {
+  const orchestrator = new MCPBundleOrchestrator();
+  await orchestrator.run();
+})();

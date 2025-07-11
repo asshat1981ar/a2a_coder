@@ -13,13 +13,13 @@
  * - Configuration management
  */
 
-const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
-const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
-const { CallToolRequestSchema, ListToolsRequestSchema } = require("@modelcontextprotocol/sdk/types.js");
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
-const { ExternalIntegrationManager } = require('./mcp-external-integrations.js');
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+import { ExternalIntegrationManager } from './mcp-external-integrations.js';
 
 class MCPInteractionFramework {
   constructor() {
@@ -942,8 +942,9 @@ class ConfigurationManager {
   }
 }
 
-const framework = new MCPInteractionFramework();
-framework.start().catch((error) => {
-  console.error("Fatal framework error:", error);
-  process.exit(1);
-});
+export default MCPInteractionFramework;
+
+(async () => {
+  const framework = new MCPInteractionFramework();
+  await framework.start();
+})();

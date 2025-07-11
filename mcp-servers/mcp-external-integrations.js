@@ -5,6 +5,9 @@
  * Manages connections and interactions with external AI and idea applications.
  */
 
+import fs from 'fs';
+import path from 'path';
+
 class ExternalIntegrationManager {
   constructor() {
     this.integrations = new Map(); // Stores registered external AI integrations

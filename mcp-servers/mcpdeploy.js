@@ -269,7 +269,7 @@ program
       console.log('No MCP servers to build.');
       return;
     }
-    servers.forEach((dir, idx) => {
+    servers.forEach((serverPath, idx) => {
       console.log(`
 🔨 Processing [${idx+1}] ${serverPath}`);
       const isDirectory = fs.lstatSync(serverPath).isDirectory();
