@@ -36,6 +36,9 @@ class ExternalIntegrationManager {
       case 'claude_desktop':
         adapter = new ClaudeDesktopAdapter(config);
         break;
+      case 'autonomous_sdlc_agent':
+        adapter = new AutonomousSDLCAdapter(config);
+        break;
       // Add more cases for other integration types
       default:
         console.error(`Unsupported integration type: ${type}`);
@@ -124,6 +127,34 @@ class ClaudeDesktopAdapter {
       status: 'success',
       response: `Mock response from Claude Desktop for tool '${toolName}' with args: ${JSON.stringify(args)}`,
     };
+  }
+}
+
+class AutonomousSDLCAdapter {
+  constructor(config) {
+    this.config = config;
+    this.baseUrl = config.baseUrl || 'http://localhost:5000'; // Default to Flask backend port
+    console.log('AutonomousSDLCAdapter initialized with config:', config);
+  }
+
+  async callTool(toolName, args) {
+    console.log(`AutonomousSDLCAdapter: Calling tool '${toolName}' with args:`, args);
+    
+    if (toolName === 'ping') {
+      try {
+        const response = await fetch(`${this.baseUrl}/api/sdlc/ping`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return { status: 'success', response: data };
+      } catch (error) {
+        console.error(`AutonomousSDLCAdapter: Ping failed: ${error.message}`);
+        return { status: 'error', response: `Ping failed: ${error.message}` };
+      }
+    } else {
+      return { status: 'error', response: `Unknown tool: ${toolName}` };
+    }
   }
 }
 
