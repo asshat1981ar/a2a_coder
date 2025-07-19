@@ -1,0 +1,16 @@
+{
+  "lastPrompt": "Briefly explain how AI NPCs in a D&D game could have persistent memory.",
+  "lastReply": "In a **D&D** game, **AI NPCs** with **persistent memory** could remember past interactions, choices, and events across sessions by using a combination of techniques:\n\n1. **Database Storage** \u2013 NPC memories (e.g., player actions, reputations, quest outcomes) are saved in a structured database (SQL, NoSQL) and reloaded when needed.  \n2. **Vector Embeddings** \u2013 Conversations and events are converted into semantic vectors (via LLMs like GPT) and stored in a vector database (e.g., Pinecone, FAISS) for retrieval based on context.  \n3. **Summarization** \u2013 Long interactions are condensed into key facts (e.g., *\"The party betrayed the king\"*) and stored for future reference.  \n4. **Session Linking** \u2013 A unique campaign ID tracks NPC memories across game sessions, ensuring continuity.  \n5. **Dynamic Prompting** \u2013 When interacting, the AI retrieves relevant memories (e.g., *\"Last time, the rogue stole from me\"*) and incorporates them into its responses.  \n\nThis allows NPCs to **recognize players, hold grudges, reward loyalty, or adapt strategies** based on past events, making the world feel alive.  \n\nWould you like a specific implementation example?",
+  "lastModel": "deepseek-chat",
+  "timestamp": "2025-07-19T02:38:00.978963",
+  "usage": {
+    "prompt_tokens": 20,
+    "completion_tokens": 262,
+    "total_tokens": 282,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 20
+  }
+}

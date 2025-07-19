@@ -1,0 +1,4 @@
+{
+  "lastPrompt": "Briefly explain how AI NPCs in a D&D game could have persistent memory.",
+  "lastReply": "AI NPCs could maintain persistent memory through a combination of:\n\n1. Database storage: Keeping track of all interactions, events, and relationships with players\n2. Context window: Maintaining recent conversation history\n3. Vector embeddings: Storing key memories in a searchable format\n4. Memory prioritization: Using importance scoring to retain significant events\n5. State tracking: Recording current emotional states, goals, and relationships\n\nThe system would save this information between sessions and load relevant memories when the NPC interacts with players again, creating continuity in their behavior and relationships."
+}

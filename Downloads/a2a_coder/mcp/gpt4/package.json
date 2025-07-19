@@ -1,0 +1,12 @@
+{
+  "name": "gpt4-mcp-server",
+  "version": "1.0.0",
+  "description": "GPT-4 MCP Server for A2A System",
+  "main": "server.py",
+  "scripts": {
+    "start": "python server.py",
+    "dev": "python server.py"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
