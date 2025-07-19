@@ -1,0 +1,30 @@
+[
+  {
+    "id": "blackbox-base",
+    "role": "glue",
+    "supportedTasks": ["chitchat", "summarize"],
+    "max_tokens": 4096,
+    "parameters": 3000000000
+  },
+  {
+    "id": "deepseek-r1",
+    "role": "retrieval",
+    "supportedTasks": ["search", "fetch_docs"],
+    "max_tokens": 8192,
+    "parameters": 7500000000
+  },
+  {
+    "id": "gemini-pro-free",
+    "role": "reasoner",
+    "supportedTasks": ["reasoning", "analysis", "code_generation"],
+    "max_tokens": 32768,
+    "parameters": 50000000000
+  },
+  {
+    "id": "llama-3-8b-free",
+    "role": "coder",
+    "supportedTasks": ["code_completion", "code_fix", "code_review"],
+    "max_tokens": 8192,
+    "parameters": 8000000000
+  }
+]

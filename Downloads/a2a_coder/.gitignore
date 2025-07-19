@@ -1,0 +1,6 @@
+
+# Sensitive files
+CREDENTIALS.md
+.env
+*.key
+*.pem
