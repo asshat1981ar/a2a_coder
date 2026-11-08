@@ -11,7 +11,7 @@
     "install": "node mcpdeploy.js install"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.15.1",
+    "@modelcontextprotocol/sdk": "^1.32.0",
     "commander": "^10.0.1"
   }
 }
